@@ -44,34 +44,89 @@ const services = [
   }
 ];
 
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6 }
+  }
+};
+
+const iconVariants = {
+  initial: { scale: 1 },
+  hover: { 
+    scale: 1.2, 
+    color: "#3498db",
+    transition: { duration: 0.3, type: "spring", stiffness: 300 } 
+  }
+};
+
 export default function WhatIDo() {
   return (
     <div className="min-h-screen py-32">
       <div className="container mx-auto">
         {/* Page header */}
-        <div className="mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 font-heading text-heading dark:text-heading-dark">
+        <motion.div 
+          className="mb-16"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.h1 
+            className="text-4xl md:text-5xl font-bold mb-4 font-heading text-heading dark:text-heading-dark"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
             What I Do
-          </h1>
-          <p className="text-lg text-body dark:text-body-dark max-w-2xl">
+          </motion.h1>
+          <motion.p 
+            className="text-lg text-body dark:text-body-dark max-w-2xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
             I provide a wide range of development and design services to help bring your digital ideas to life. Here's how I can help you.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
         
         {/* Services grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 gap-16"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
           {services.map((service, index) => (
             <motion.div 
               key={index} 
-              className="flex"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
+              className="flex p-6 rounded-lg transition-all hover:bg-gray-50 dark:hover:bg-gray-800/50"
+              variants={itemVariants}
+              whileHover={{ 
+                boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)",
+                translateY: -5
+              }}
             >
-              <div className="mr-6 mt-1">
+              <motion.div 
+                className="mr-6 mt-1"
+                variants={iconVariants}
+                whileHover="hover"
+              >
                 {service.icon}
-              </div>
+              </motion.div>
               <div>
                 <h3 className="text-xl font-bold mb-4 font-heading text-heading dark:text-heading-dark">{service.title}</h3>
                 <p className="text-body dark:text-body-dark">
@@ -80,7 +135,7 @@ export default function WhatIDo() {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </div>
   );
