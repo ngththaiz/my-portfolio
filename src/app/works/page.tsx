@@ -99,7 +99,7 @@ export default function ProjectsPage() {
                     )}
                     <div className="flex space-x-4">
                       <Link 
-                        href={`/projects/${project.id}`}
+                        href={`/works/${project.id}`}
                         className="inline-flex items-center text-sm text-primary hover:underline"
                       >
                         View Details

@@ -22,7 +22,7 @@ export default function ProjectDetailPage() {
     <div className="min-h-screen py-32 bg-background-light dark:bg-background-dark">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <Link 
-          href="/projects" 
+          href="/works" 
           className="inline-flex items-center text-primary mb-8 hover:underline"
         >
           <FaArrowLeft className="mr-2" /> Back to Projects
@@ -67,6 +67,26 @@ export default function ProjectDetailPage() {
                   <p className="text-body dark:text-body-dark mb-6 leading-relaxed">
                     {project.fullDescription}
                   </p>
+                  
+                  {project.content && (
+                    <div className="mt-8 space-y-8">
+                      {project.content.map((section, index) => (
+                        <motion.div 
+                          key={index}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.5, delay: 0.4 + (index * 0.1) }}
+                        >
+                          <h3 className="text-xl font-bold mb-3 text-heading dark:text-heading-dark font-heading">
+                            {section.heading}
+                          </h3>
+                          <p className="text-body dark:text-body-dark leading-relaxed">
+                            {section.text}
+                          </p>
+                        </motion.div>
+                      ))}
+                    </div>
+                  )}
                 </motion.div>
               </div>
               
@@ -181,7 +201,7 @@ export default function ProjectDetailPage() {
                       {p.description}
                     </p>
                     <Link 
-                      href={`/projects/${p.id}`}
+                      href={`/works/${p.id}`}
                       className="text-primary hover:underline"
                     >
                       View Details
